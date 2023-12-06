@@ -3,7 +3,7 @@ import librosa
 import numpy as np
 import os
 import soundfile as sf
-from model import AudioDenoisingCNN  # Import your model definition
+from model_CNN import AudioDenoisingCNN  # Import your model definition
 
 # Load the trained model
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

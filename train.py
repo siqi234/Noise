@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from model import AudioDenoisingCNN
+from model_CNN import AudioDenoisingCNN
+# from model_RNNs import AudioDenoisingRNN
 from dataloader import AudioDataset  # Assuming you have a dataset class defined
 from torch.utils.data import DataLoader
 from utils import save_model, load_model  # Assuming these functions are defined in utils.py
@@ -35,13 +36,14 @@ for epoch in range(num_epochs):
         for i, (noisy, clear) in enumerate(tepoch):
             tepoch.set_description(f"Epoch {epoch+1}")
 
-            noisy, clear = noisy.unsqueeze(1).to(device), clear.unsqueeze(1).to(device)
+            noisy, clear = noisy.unsqueeze(1).to(device), clear.unsqueeze(1).to(device) #CNN
 
             # Forward pass
             outputs = model(noisy)
 
             # Resize output to match target tensor size
-            outputs_resized = F.interpolate(outputs, size=(1025, 130), mode='bilinear', align_corners=False)
+            outputs_resized = F.interpolate(outputs, size=(1025, 130), mode='bilinear', align_corners=False) #CNN
+
 
             # Calculate loss
             loss = criterion(outputs_resized, clear)
